@@ -19,7 +19,6 @@ const Signup = () => {
       await signup(username, password, fullName);
       navigate("/login");
     } catch (err) {
-      console.error("Signup error:", err.message);
       setError(err.message || "An unexpected error occurred. Please try again.");
     }
   };

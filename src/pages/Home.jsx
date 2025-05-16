@@ -1,17 +1,29 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import PictureUploadModal from "../components/PictureUploadModal";
+import { useNavigate } from "react-router-dom";
+import AlertModal from "../components/AlertModal";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen]= useState(false);
   const [pictureType, setPictureType] = useState(null);
-
-  const openModal = () => setIsModalOpen(true);
+  const username = localStorage.getItem("cervify_username");
+  const openModal = () => {
+    if (!username) {
+      setIsAlertOpen(true);
+      return;
+    }
+    setIsModalOpen(true);
+  }
   const closeModal = () => setIsModalOpen(false);
-
+  const closeAlert = () => {
+    setIsAlertOpen(false); 
+    navigate("/login");
+  }
   const handleSelectType = (type) => {
     setPictureType(type);
-    console.log("User selected:", type);
   };
 
   return (
@@ -56,6 +68,12 @@ const Home = () => {
           Selected type: <span className="font-semibold">{pictureType}</span>
         </div>
       )}
+      <AlertModal
+        isOpen={isAlertOpen}
+        message={"Please login first."}
+        onClose={closeAlert}
+      ></AlertModal>
+
     </div>
   );
 };

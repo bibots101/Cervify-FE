@@ -24,20 +24,13 @@ export const useImageUpload = ({
       fileInput.onchange = async () => {
         const file = fileInput.files[0];
         if (!file) return;
-
         const username = localStorage.getItem("cervify_username");
-        if (!username) {
-          alert("Please login first.");
-          navigate("/login");
-          return;
-        }
-
         const imageName = file.name.split(".").slice(0, -1).join(".");
         setLoading(true);
         setProgress(5);
         setMessage("Uploading image...");
 
-        const predictionPromise = predictImage(file, username);
+        const predictionPromise = predictImage(file, username,type);
 
         const pollingInterval = setInterval(async () => {
           try {
@@ -47,7 +40,6 @@ export const useImageUpload = ({
             if (data.percentage >= 100) clearInterval(pollingInterval);
           } catch (err) {
             console.error("Polling error:", err);
-            // Don't clear interval to let it retry
           }
         }, 1000);
 
@@ -94,7 +86,6 @@ export const useImageUpload = ({
     } catch (err) {
       const msg = "Something went wrong. Please try again. " + err.message;
       setErrorMessage(msg);
-      console.error("Upload error:", err);
       alert(msg);
       setLoading(false);
     }

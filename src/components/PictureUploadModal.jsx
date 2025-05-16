@@ -22,7 +22,7 @@ const PictureUploadModal = ({ isOpen, closeModal, onSelectType }) => {
     setErrorMessage,
     onPredictionComplete: (prediction, filename) => {
       localStorage.setItem("cervify_prediction", JSON.stringify(prediction));
-      localStorage.setItem("cervify_uploaded_image", filename);
+      localStorage.setItem("cervify_uploaded_image", filename.split(".")[0]+".enc");
       navigate("/model");
       window.location.reload();
     },
@@ -102,6 +102,7 @@ const PictureUploadModal = ({ isOpen, closeModal, onSelectType }) => {
         </div>
       </Dialog>
     </Transition>
+    
   );
 };
 

@@ -30,7 +30,7 @@ const ModelInterface = () => {
         {/* Canvas + Results */}
         <div className="flex flex-col lg:flex-row gap-4 items-start justify-center w-full h-full overflow-hidden">
           {/* Canvas Area */}
-          <div className="flex-grow w-full h-[60vh] lg:h-full max-w-full overflow-hidden z-10">
+          <div className="flex-grow w-full h-[70vh] lg:h-full max-w-full overflow-hidden z-10">
             <ModelCanvas
               hoveredInfo={hoveredInfo}
               setHoveredInfo={setHoveredInfo}
@@ -39,7 +39,7 @@ const ModelInterface = () => {
           </div>
 
           {/* Result Panel */}
-          <div className="w-full lg:w-[400px] flex-shrink-0 h-[40vh] lg:h-full overflow-hidden">
+          <div className="w-full lg:w-[25vw] flex-shrink-0 h-[70vh] lg:h-full overflow-hidden">
             <div className="bg-gray-50/20 backdrop-blur-lg shadow-lg p-2 rounded-2xl ring-2 ring-blue-300 bg-gradient-to-r from-gray-100 to-blue-50 h-full overflow-auto">
               <ResultPanel
                 hoveredInfo={hoveredInfo}
@@ -51,7 +51,7 @@ const ModelInterface = () => {
         </div>
 
         {/* Image Selector */}
-        <div className="mt-4 flex-shrink-0 max-h-[15%]">
+        <div className="mt-2 flex-shrink-0">
           <ImageSelector onUploadClick={openModal} />
         </div>
       </main>

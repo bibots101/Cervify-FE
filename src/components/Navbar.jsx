@@ -3,9 +3,11 @@ import { Menu } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { deleteAccount } from "../services/api";
-
+import AlertModal from "./AlertModal";
 const Navbar = ({ onUploadClick }) => {
   const navigate = useNavigate();
+  const [isAlertOpen, setIsAlertOpen]= useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [fullname, setFullname] = useState(null);
   const [username, setUsername] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -28,13 +30,18 @@ const Navbar = ({ onUploadClick }) => {
     navigate("/login");
   };
 
+  const closeAlert = () => {
+    setIsAlertOpen(false); 
+  }
   const handleAccountDeletion = async () => {
     try {
       await deleteAccount(username, password);
+      setAlertMessage("Account deleted successfully.");
+      setIsAlertOpen(true);
       handleLogout();
-      alert("Account deleted successfully.");
     } catch (err) {
-      alert("Failed to delete account: " + err.message);
+      setAlertMessage("Failed to delete account: " + err.message);
+      setIsAlertOpen(true);
     }
   };
 
@@ -72,7 +79,7 @@ const Navbar = ({ onUploadClick }) => {
               <span>{username ? fullname : "USER"}</span>
             </Menu.Button>
 
-            <Menu.Items className="absolute left-1 right-0 mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+            <Menu.Items className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
               <div className="p-1">
                 {username ? (
                   <>
@@ -80,7 +87,7 @@ const Navbar = ({ onUploadClick }) => {
                       {({ active }) => (
                         <button
                           onClick={handleLogout}
-                          className={`w-full text-left px-4 py-2 text-sm rounded ${active ? "bg-gray-100" : ""}`}
+                          className={`w-full text-center px-4 py-2 text-sm rounded ${active ? "bg-gray-100" : ""}`}
                         >
                           Logout
                         </button>
@@ -90,7 +97,7 @@ const Navbar = ({ onUploadClick }) => {
                       {({ active }) => (
                         <button
                           onClick={() => setShowDeleteModal(true)}
-                          className={`w-full text-left px-4 py-2 text-sm rounded text-red-600 ${active ? "bg-red-50" : ""}`}
+                          className={`w-full text-center px-4 py-2 text-sm rounded text-red-600 ${active ? "bg-red-50" : ""}`}
                         >
                           Delete Account
                         </button>
@@ -103,7 +110,7 @@ const Navbar = ({ onUploadClick }) => {
                       {({ active }) => (
                         <Link
                           to="/login"
-                          className={`block px-4 py-2 text-sm rounded ${active ? "bg-blue-100" : ""}`}
+                          className={`block text-center px-4 py-2 text-sm rounded ${active ? "bg-blue-100" : ""}`}
                         >
                           Login
                         </Link>
@@ -113,7 +120,7 @@ const Navbar = ({ onUploadClick }) => {
                       {({ active }) => (
                         <Link
                           to="/signup"
-                          className={`block px-4 py-2 text-sm rounded ${active ? "bg-blue-100" : ""}`}
+                          className={`block text-center px-4 py-2 text-sm rounded ${active ? "bg-blue-100" : ""}`}
                         >
                           Sign Up
                         </Link>
@@ -154,6 +161,11 @@ const Navbar = ({ onUploadClick }) => {
               </button>
             </div>
           </div>
+         <AlertModal
+          isOpen={isAlertOpen}
+          message={alertMessage}
+          onClose={closeAlert}
+        ></AlertModal>
         </div>
       )}
     </>

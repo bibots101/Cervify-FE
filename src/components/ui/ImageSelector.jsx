@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { getHistory, deleteImage} from "../../services/api";
+import AlertModal from "../AlertModal";
 
 const ImageSelector = ({ onUploadClick }) => {
-  const [images, setImages] = useState([]);
   const [fullHistory, setFullHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const username = localStorage.getItem("cervify_username");
   const currentImage = localStorage.getItem("cervify_uploaded_image");
   const [validImages, setValidImages] = useState([]);
+  const [isAlertOpen, setIsAlertOpen]= useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -19,7 +21,6 @@ const ImageSelector = ({ onUploadClick }) => {
         const uniquePaths = [
           ...new Set(historyData.history.map((item) => item.image_path)),
         ];
-        setImages(uniquePaths);
         setFullHistory(historyData.history);
         setValidImages(uniquePaths);
       } catch (error) {
@@ -31,6 +32,10 @@ const ImageSelector = ({ onUploadClick }) => {
 
     fetchHistory();
   }, [username]);
+
+  const closeAlert = () => {
+    setIsAlertOpen(false); 
+  }
 
   const handleImageClick = (imagePath) => {
     const filename = imagePath.split("/").pop();
@@ -49,22 +54,24 @@ const ImageSelector = ({ onUploadClick }) => {
     try {
       if (!window.confirm("Are you sure you want to delete this image?")) return;
       await deleteImage(filename, username);
-      setImages((prev) => prev.filter((img) => img !== imagePath));
+
       setValidImages((prev) => prev.filter((img) => img !== imagePath));
 
       localStorage.setItem("cervify_uploaded_image", null);
       localStorage.setItem("cervify_prediction", null);
       if (currentImage == filename) {
-        let nextimg = validImages.filter((img) => img !== imagePath);
-        if (nextimg.length > 0){
-          handleImageClick(nextimg[0]);
+        if (validImages.length > 0){
+          handleImageClick(validImages[0]);
         }
       }
+      else{
       window.location.reload();
+      }
 
     } catch (err) {
-      console.error("Failed to delete image:", err.message);
-      alert("Failed to delete image.");
+      console.log(err);
+      setErrorMessage("Failed to delete image.");
+      setIsAlertOpen(true);
     }
   };
   return (
@@ -119,6 +126,12 @@ const ImageSelector = ({ onUploadClick }) => {
           <p className="text-gray-600 text-sm">No previous uploads found.</p>
         )}
       </div>
+      <AlertModal
+        isOpen={isAlertOpen}
+        message={errorMessage}
+        onClose={closeAlert}
+      >
+      </AlertModal>
     </div>
   );
 };

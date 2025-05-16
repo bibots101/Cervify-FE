@@ -36,7 +36,7 @@ const ModelCanvas = ({ hoveredInfo, setHoveredInfo,panTargetIndex }) => {
       setPredictions(predictionData);
       setUploadedImage(`http://127.0.0.1:8000/get_image/${imageFilename}?username=${username}`);
     }
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     if (!uploadedImage) return;
@@ -323,7 +323,7 @@ const handleDownloadPDF = async () => {
             </button>
             <button
               onClick={fitImageToCanvas}
-              className="bg-purple-500 text-white px-3 py-2 rounded-md shadow hover:bg-blue-600"
+              className="bg-purple-500 text-white px-3 py-2 rounded-md shadow hover:bg-purple-600"
             >
               Reset View
             </button>
@@ -331,13 +331,13 @@ const handleDownloadPDF = async () => {
           <div className="flex space-x-2">
             <button
               onClick={() => setShowBoxes((prev) => !prev)}
-              className="bg-blue-500 text-white px-3 py-2 rounded-md shadow hover:bg-gray-800"
+              className="bg-blue-500 text-white px-3 py-2 rounded-md shadow hover:bg-blue-600"
             >
               {showBoxes ? "Hide Results" : "Show Results"}
             </button>
             <button
               onClick={handleDownloadPDF}
-              className="bg-blue-500 text-white px-3 py-2 rounded-md shadow hover:bg-green-700"
+              className="bg-blue-500 text-white px-3 py-2 rounded-md shadow hover:bg-blue-600"
             >
               Download PDF
             </button>
@@ -348,7 +348,7 @@ const handleDownloadPDF = async () => {
           ref={wrapperRef}
           style={{
           width: "900px",
-          height: "600px",
+          height: "60vh",
           overflow: "hidden",
         }}>
         <TransformWrapper

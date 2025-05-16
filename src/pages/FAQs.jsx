@@ -10,7 +10,6 @@ const FAQs = () => {
     
     const handleSelectType = (type) => {
         setPictureType(type);
-        console.log("User selected:", type);
     };
 
     return (

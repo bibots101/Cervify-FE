@@ -30,16 +30,16 @@ const ResultPanel = ({ hoveredInfo, setHoveredInfo,setPanTargetIndex }) => {
   }, []);
 
   return (
-    <div className="p-[2px] rounded-2xl">
-      <div className="rounded-2xl bg-gray-50/10 backdrop-blur-md p-4 flex flex-col h-[85vh]">
-        <div className="flex items-center justify-between mb-2">
+    <div className="w-full p-[2px] rounded-2xl">
+      <div className="rounded-2xl bg-gray-50/10 backdrop-blur-md p-4 flex flex-col h-auto">
+        <div className="flex-shrink-0 flex  items-center justify-center gap-4 mb-2">
           <span className="font-semibold text-gray-800">Cervify</span>
           <Toggle toggled={isActive} onToggle={handleToggle} />
         </div>
 
         <div
           ref={scrollPanelRef}
-          className="flex-1 overflow-y-auto bg-white p-2 rounded-xl text-sm text-gray-700"
+          className="flex-grow overflow-y-auto bg-white p-2 rounded-xl text-sm text-gray-700 overflow-auto"
         >
           {predictions.length > 0 ? (
             <div className="space-y-2">
@@ -91,7 +91,7 @@ const ResultPanel = ({ hoveredInfo, setHoveredInfo,setPanTargetIndex }) => {
           )}
         </div>
 
-        <div className="mt-4 text-xs text-gray-600 text-center space-y-1">
+        <div className="mt-4 flex-shrink-0 text-xs text-gray-600 text-center space-y-1">
           <button className="hover:underline block w-full">Help</button>
           <button className="hover:underline block w-full">Settings</button>
         </div>
