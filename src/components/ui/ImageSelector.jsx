@@ -76,10 +76,10 @@ const ImageSelector = ({ onUploadClick }) => {
   };
   return (
     <div className="bg-gray-50/20 backdrop-blur-lg shadow-lg p-4 rounded-xl">
-      <div className="flex gap-6 justify-start items-center flex-wrap">
+      <div className="flex gap-6 overflow-x-auto whitespace-nowrap">
         <button
           onClick={onUploadClick}
-          className="bg-transparent border-2 border-dashed border-purple-500 w-24 h-24 rounded-xl flex items-center justify-center text-purple-500 text-4xl hover:bg-blue-200 transition-colors duration-200"
+          className="bg-transparent border-2 border-dashed border-purple-500 w-24 h-24 rounded-xl flex items-center justify-center text-purple-500 text-4xl hover:bg-blue-200 transition-colors duration-200 flex-shrink-0"
         >
           +
         </button>
@@ -92,7 +92,7 @@ const ImageSelector = ({ onUploadClick }) => {
             const imageUrl = `http://127.0.0.1:8000/get_image/${filename}?username=${username}`;
             
             return (
-              <div key={idx} className="relative w-24 h-24 group">
+              <div key={idx} className="relative w-24 h-24 inline-block flex-shrink-0 group">
                 
                 <img
                   src={imageUrl}
@@ -123,7 +123,7 @@ const ImageSelector = ({ onUploadClick }) => {
             );
           })
         ) : (
-          <p className="text-gray-600 text-sm">No previous uploads found.</p>
+          <p className="text-gray-600 text-sm inline-block">No previous uploads found.</p>
         )}
       </div>
       <AlertModal

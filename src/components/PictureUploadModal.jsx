@@ -82,7 +82,7 @@ const PictureUploadModal = ({ isOpen, closeModal, onSelectType }) => {
 
                 <div className="mt-4 flex justify-around space-x-4">
                   <button
-                    onClick={() => handleUpload("phone", onSelectType, closeModal)}
+                    onClick={() => handleUpload("mobile", onSelectType, closeModal)}
                     className="inline-flex items-center rounded-md bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none"
                   >
                     <DevicePhoneMobileIcon className="h-6 w-6 mr-2" />

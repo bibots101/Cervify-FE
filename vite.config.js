@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: './',
   build: {
-    outDir: '../desktop-app/frontend_dist',
+    outDir: '../Cervify-app/frontend_dist',
     emptyOutDir: true,
     assetsDir: 'assets',
     rollupOptions: {
